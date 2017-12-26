@@ -1,0 +1,45 @@
+# Пример запуска приложения вместе с БД.
+# Параметры по умолчанию заданы в файле .env
+# Желательно запускать с помощью скрипта run.sh, чтобы корректно подставлялись значения из окружения среды.
+
+version: "3"
+services:
+  mongo:
+    image: javister-docker-docker.bintray.io/javister/javister-docker-mongo:3.6
+    restart: unless-stopped
+    volumes:
+      - ./tmp:/config:rw
+    networks:
+      - appnet
+    expose:
+      - "27017"
+    environment:
+      - LANG=ru_RU.UTF-8
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - http_proxy=${http_proxy}
+      - no_proxy=${no_proxy}
+
+  pritunl:
+    image: javister-docker-docker.bintray.io/javister/javister-docker-pritunl:1
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    volumes:
+      - ./tmp:/config:rw
+    networks:
+      - appnet
+    ports:
+      - "1194:1194"
+      - "443:443"
+    environment:
+      - LANG=ru_RU.UTF-8
+      - MONGO_HOST=${MONGO_HOST}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - http_proxy=${http_proxy}
+      - no_proxy=${no_proxy}
+#      - LOG_LEVEL=DEBUG
+
+networks:
+  appnet:

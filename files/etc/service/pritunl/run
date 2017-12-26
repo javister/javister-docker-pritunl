@@ -1,0 +1,3 @@
+#!/bin/bash
+wait4tcp ${MONGO_HOST} 27017
+exec pritunl start --conf=/etc/pritunl-custom.conf
