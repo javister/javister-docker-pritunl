@@ -5,7 +5,7 @@
 version: "3"
 services:
   mongo:
-    image: javister-docker-docker.bintray.io/javister/javister-docker-mongo:3.6
+    image: javister-docker-docker.bintray.io/javister/javister-docker-mongo:3.6-1
     restart: unless-stopped
     volumes:
       - ./tmp:/config:rw
@@ -21,7 +21,7 @@ services:
       - no_proxy=${no_proxy}
 
   pritunl:
-    image: javister-docker-docker.bintray.io/javister/javister-docker-pritunl:1
+    image: javister-docker-docker.bintray.io/javister/javister-docker-pritunl:1.1
     restart: unless-stopped
     depends_on:
       - mongo
